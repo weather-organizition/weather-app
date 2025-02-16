@@ -1,175 +1,216 @@
-
-
-*{
-    margin: 0px;
-    padding:0;
-}
-
 body{
-    text-align: center;
-    padding: 100px 20px;
-    background-image: url("https://shorturl.at/oFVV7");
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    /* background-color: #1a1a1a; */
+    color: white;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url("https://shorturl.at/BaKD2");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attachment: fixed;
-    position: relative;
-    color:white;
-    width: 100%;
-    /* overflow: hidden; */
 }
 
-.header-content::before {
+
+body::before {
     content: "";
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    `/*background: rgba(0, 0, 0, 0.5);*/
     z-index: 1;
 }
 
+
+
+.header-content {
+    text-align: center;
+    padding: 40px 20px;
+    min-height: 300px;
+}
+
+.weather {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
 .logo {
-
-    text-align: center;
-    font-size: 22px;
-    font-weight: bold;
+    font-size: 24px;
     color: white;
-    
-
 }
 
-.search-bar {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    align-items: center;
-    color:blue ;
-    z-index: 2;
-}
-
-.search-bar input {
-    padding: 12px 15px;
-    border-radius: 25px;
-    width: 280px;
-    outline: none;
-    font-size: 16px;
-    background: rgba(255, 255, 255, 0.2);
-    color:white;
-    text-align: center;
-}
-
-.search-bar input::placeholder {
-    color: rgb(131, 125, 125);
-}
-
-.search-bar button {
-    padding: 12px 20px;
-    margin-left: 10px;
-    background: #007bff;
-    border: none;
-    border-radius: 25px;
-    color: black;
-    cursor: pointer;
+.app-title {
+    margin: 0;
     font-size: 20px;
-    transition: 0.3s;
+    color: white;
 }
 
-.search-bar button:hover {
-    background: #546577;
+.header-content h1 {
+    margin: 0 0 10px;
+    font-size: 2.5rem;
+    color: white;
 }
 
-.current-conditions h2 {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    margin: 20px auto;
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    color: black;
-   
-    color:red;
+.header-content p {
+    margin: 0 0 30px;
+    font-size: 1.1rem;
+    opacity: 0.9;
 }
 
-/*Inta ayaan ka bilaabay  => hassan*/ 
-
-  #current-conditions{
-    width: 95%;
+.search {
     display: flex;
     justify-content: center;
-    background-color: #546577;
-    margin-top: 0.5rem;
+    gap: 10px;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-#current-conditions h2{
-    color: #F9A602;
-    padding-right: 4rem;
-}  
+.search input {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 16px;
+    backdrop-filter: blur(10px);
+}
 
-.Weather-details {
+.search input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.search button {
+    padding: 12px 30px;
+    border: none;
+    border-radius: 25px;
+    background: #007bff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search button:hover {
+    background: #0056b3;
+}
+
+#current-conditions {
+    background: #1E201E;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 800px;
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+.weather-details {
     display: flex;
     justify-content: space-around;
-    margin-top: 10px;
+    margin-top: 20px;
+    text-align: center;
 }
 
-.Weather-details .value {
-    font-size: 24px;
+.weather-details .value {
+    font-size: 2rem;
+    margin: 0;
     font-weight: bold;
 }
 
+.weather-details .label {
+    margin: 5px 0 0;
+    color: rgba(255, 255, 255, 0.7);
+}
 
-
-
-
-
-
-
-/* Active Alerts */
 .active-alerts {
-    background: white;
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 0 20px;
+    background: #1E201E;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width:95%;
-    margin: 10px auto;
-    
-    
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
 
 }
 
-.container {
-    margin-top: 10px;
+.active-alerts .header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    
 }
 
 .alert {
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 30 px;
-    border-style:black-solid;
-   
+    background: rgba(255, 0, 0, 0.342);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 15px;
+    backdrop-filter: blur(10px);
 }
 
 .alert-severe {
-    background-color: #6c0909;
-    color: white;
+    border-left: 4px solid #dc3545;
 }
 
 .alert-watch {
-    background-color: #420909;
-    color:white;
+    border-left: 4px solid #fd7e14;
 }
 
 .alert-advisory {
-    background-color: #522310;
-    color:white;
+    border-left: 4px solid #ffc107;
+}
+
+.alert-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.alert-location {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+}
+
+.alert-details {
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.alert-footer {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.6);
 }
 
 
-
+/* NB: waxaad isticmaali doontaan responsive ka gaar ahaan mobile responsive ka 
+ */
+/* @media (max-width: 768px) {
+    .weather-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .search {
+        flex-direction: column;
+    }
+    
+    .search button {
+        width: 100%;
+    }
+} */
