@@ -1,4 +1,8 @@
-.header-content {
+
+
+/* .header-content  */
+
+body{
     text-align: center;
     padding: 100px 20px;
     background-image: url("https://shorturl.at/BaKD2");
@@ -10,7 +14,7 @@
     position: relative;
     color: black;
     width: 100%;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .header-content::before {
@@ -77,7 +81,7 @@
 }
 
 .current-conditions h2 {
-    /*background: white;
+    background: white;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -88,7 +92,26 @@
     flex-direction: column;
     align-items: center;
     color: black;
-    */
+   
     color:red;
 }
+
+/* Inta ayaan ka bilaabay  => hassan*/ 
+
+  /* #current-conditions{
+    width: 95%;
+    display: flex;
+    justify-content: center;
+    background-color: #546577;
+    margin-top: 0.5rem;
+}
+
+#current-conditions h2{
+    color: #F9A602;
+    padding-right: 4rem;
+}  */
+
+
+
+
 
