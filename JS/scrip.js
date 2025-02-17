@@ -6,7 +6,7 @@ function fetchAlerts(location) {
         response.data &&
         response.data.alerts &&
         response.data.alerts.length > 0
-      ) {
+      ) { 
         console.log(" Weather Alerts Received:", response.data.alerts);
       } else {
         console.log(`No weather alerts for ${location}.`);
