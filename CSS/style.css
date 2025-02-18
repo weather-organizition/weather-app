@@ -196,7 +196,7 @@ body::before {
 
 /* NB: waxaad isticmaali doontaan responsive ka gaar ahaan mobile responsive ka 
  */
-/* @media (max-width: 768px) {
+ @media (max-width: 768px) {
     .weather-details {
         flex-direction: column;
         gap: 20px;
@@ -213,4 +213,4 @@ body::before {
     .search button {
         width: 100%;
     }
-} */
+} 
