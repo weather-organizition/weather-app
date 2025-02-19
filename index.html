@@ -17,26 +17,31 @@
         <h1>Stay Safe. Stay Informed.</h1>
         <p>Real-time extreme weather alerts for your location.</p>
         <form class="search" role="search">
-            <input type="search" placeholder="Enter location..." aria-label="Search weather alerts">
-            <button type="submit">Search</button>
+            <input id="cityInput" type="search" placeholder="Enter location..." aria-label="Search weather alerts">
+            <button  id="btn" type="button">Search</button>
         </form>
     </header>
 
     <main>
+        
         <section id="current-conditions">
             <i class="fa-solid fa-temperature-three-quarters"></i>
             <h2>Current Conditions</h2>
-            <div class="weather-details">
-                <div class="temperature">
-                    <p class="value">72°F</p>
+            <p class="value" data-weather-type="description">Clear</p>
+            <img class="value" data-weather-type="icon" src="" atl="">
+            <H1 class="value" id="Location"> </H1>
+            <div class="weather-details" >
+                
+                <div class="temperature"> 
+                    <p class="value" data-weather-type="temp">72°F</p>
                     <p class="label">Temperature</p>
                 </div>
                 <div class="humidity">
-                    <p class="value">45%</p>
+                    <p class="value" data-weather-type="humidity">45%</p>
                     <p class="label">Humidity</p>
                 </div>
                 <div class="wind">
-                    <p class="value">12mph</p>
+                    <p class="value" data-weather-type="wind">12mph</p>
                     <p class="label">Wind Speed</p>
                 </div>
             </div>
@@ -49,51 +54,57 @@
                     <h2>Active Alerts</h2>
                     <span>Live Updates</span>
                 </div>
-        
-                <div class="alert alert-severe">
-                    <div class="alert-title">
+                
+                <template class="alert alert-severe" id="alert-severe">
+                    <div class="alert alert-severe">
+                    <div class="alert-title"  >
                         <i class="fa-solid fa-triangle-exclamation"></i>
-                        Severe Thunderstorm Warning
+                       <h3 data-weather-type="alertEvent"> Severe Thunderstorm Warning  </h3> 
                     </div>
-                    <div class="alert-location">Denver, CO</div>
-                    <div class="alert-details">Large hail and damaging winds expected. 
+                    <div class="alert-location" id="Location">Denver, CO</div>
+                    <div class="alert-details" data-weather-type="alertIstraction">Large hail and damaging winds expected. 
                         Seek shelter immediately. Lightning may cause power outages.</div>
                     <div class="alert-footer">
-                        <span class="alert-id">THUNDERSTORM ID:1</span>
-                        <span class="alert-time-remaining">1h remaining</span>
+                        <span class="alert-id" data-weather-type ="alertseverity">THUNDERSTORM ID:1</span>
+                        <span class="alert-time-remaining" data-weather-type ="alerteffective"> 1h remaining </span>
                     </div>
                 </div>
+                </template>
         
-                <div class="alert alert-watch">
+             
+        
+                  <!-- <div class="alert alert-watch"> 
                     <div class="alert-title">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                         Flash Flood Watch
                     </div>
-                    <div class="alert-location">Boulder County, CO</div>
+                    <div class="alert-location" data-weather-type="alertArea">Boulder County, CO</div>
                     <div class="alert-details">Heavy rainfall may lead to flash flooding. Monitor local conditions and be prepared to take action.</div>
                     <div class="alert-footer">
                         <span class="alert-id">FLOOD ID:2</span>
                         <span class="alert-time-remaining">3h remaining</span>
                     </div>
-                </div>
+                    
+                </div> -->
         
-                <div class="alert alert-advisory">
+                <!-- <div class="alert alert-advisory">
                     <div class="alert-title">
                         <i class="fa-solid fa-triangle-exclamation"></i>
                         High Wind Advisory
                     </div>
-                    <div class="alert-location">Fort Collins, CO</div>
+                    <div class="alert-location" id="Location">Fort Collins, CO</div>
                     <div class="alert-details">Winds 25-35 mph with gusts up to 50 mph expected. Secure loose outdoor objects.</div>
                     <div class="alert-footer">
                         <span class="alert-id">WIND ID:3</span>
                         <span class="alert-time-remaining">5h remaining</span>
-                    </div>
-                </div>
+                    </div>  
+                </div> -->
             </div>
 
            
-        </article>
+        <!-- </article> -->
         </section>
+       
     <!-- <footer class="footer">
         <p>stay save stay informed.</p>
     </footer> -->
