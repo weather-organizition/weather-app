@@ -1,7 +1,11 @@
 function fetchAlerts(location) {
   axios
-    .get("http://api.weatherapi.com/v1")
+    .get(
+      `http://api.weatherapi.com/v1/current.json?key=b96487ed0b804c0e8ce52629251602&q=${location}`
+    )
     .then((response) => {
+      console.log(response);
+
       if (
         response.data &&
         response.data.alerts &&
