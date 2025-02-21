@@ -114,7 +114,7 @@ document.querySelector("#btn").addEventListener("click", () => {
 //fetchAlerts("london");
 //fetchAlerts("New York");
 //fetchAlerts("55379");
-fetchAlerts("Saudi Arabia");
+fetchAlerts("seattle");
 //fetchAlerts("Sydney");
 
 //fetchAlerts("InvalidCity123");
