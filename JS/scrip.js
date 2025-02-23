@@ -44,7 +44,7 @@ function fetchAlerts(location) {
 } 
 
 const pexelsAPIKey = "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH"
-function backgroundChange(discription){
+function backgroundChange(discription) {
   const htmlbody = document.body;
 
   let DiscriptionSearch = "weather";
@@ -61,7 +61,7 @@ function backgroundChange(discription){
   }
   else if(discription.textContent.includes("sunny") ||
   discription.textContent.includes("clear")){
-    DiscriptionSearch = "sunny sky";
+    DiscriptionSearch = "blue sky";
   }
   else if(discription.textContent.includes("snow") ||
   discription.textContent.includes("blizzard")){
@@ -174,13 +174,10 @@ backgroundChange(discription);
     activeContainer.appendChild(noAlertMessage);
   
   }
-
- 
-  
-  
 }
+  
 
-document.querySelector("#btn").addEventListener("click", () => {
+document.querySelector("#btn").addEventListener("click",  (e) => {
   const locationInput = document.querySelector("#cityInput").value;
   if (locationInput) {
     fetchAlerts(locationInput);
@@ -188,10 +185,21 @@ document.querySelector("#btn").addEventListener("click", () => {
     console.log("Please enter a location.");
   }
 })
+document.querySelector("#cityInput").addEventListener("keypress",  (e) => { 
+  if (e.key === "Enter") {
+    e.preventDefault();
+    const locationInput = document.querySelector("#cityInput").value;
+    if (locationInput) {
+      fetchAlerts(locationInput);
+    } else {
+      console.log("Please enter a location.");
+    }
+  }
+})
 //fetchAlerts("london");
 //fetchAlerts("New York");
 //fetchAlerts("55379");
-fetchAlerts("san francisco");
-//fetchAlerts("Sydney");
+//fetchAlerts("san francisco");
+ fetchAlerts("sydney");
 
 //fetchAlerts("InvalidCity123");
