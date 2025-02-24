@@ -1,205 +1,203 @@
-function fetchAlerts(location) {
-  axios
-    .get(//'http://api.weatherapi.com/v1/current.json?key=b96487ed0b804c0e8ce52629251602&q=${location}')
-      `http://api.weatherapi.com/v1/forecast.json?key=b96487ed0b804c0e8ce52629251602&q=${location}&alerts=yes`)
+const API_KEY = "b96487ed0b804c0e8ce52629251602";
+const PEXELS_API_KEY = "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH";
 
+function fetchWeatherData(location) {
+  const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&alerts=yes`;
+
+  return fetch(url)
     .then((response) => {
-        console.log(response)
-      if (
-        response.data 
-        // response.data.alerts &&
-        //  response.data.alerts.alert.length > 0
-       ) { 
-        weatherData(response.data)
-        console.log(" Weather Alerts Received:", response.data.alerts.alert);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data) {
+        return data;
       } else {
-        console.log(`No weather alerts for ${location}.`);
+        throw new Error("No data received from the API");
       }
     })
-    .catch((error) => {
-      if (error.response) {
-        if (error.response.status === 401) {
-          console.error(
-            " API Error: Invalid API Key. Check your API settings."
-          );
-        } else if (error.response.status === 400) {
-          console.error(
-            " API Error: Invalid location. Please try another city."
-          );
-        } else if (error.response.status === 429) {
-          console.error(" API Error: Too many requests. Try again later.");
-        } else {
-          console.error(
-            ` API Error (${error.response.status}): ${error.response.data.error.message}`
-          );
-        }
-      } else if (error.request) {
-        console.error(
-          " Network Error: No response received. Please check your internet connection."
-        );
-      } else {
-        console.error(" Unexpected Error:", error.message);
+    .catch(handleApiError);
+}
+
+function handleApiError(error) {
+  console.error("Error fetching weather data:", error);
+  // soo bandhigista error ka message ee user 
+  document.querySelector(
+    "#current-conditions"
+  ).innerHTML = `<p class="error">Error: ${error.message}</p>`;
+  document.querySelector(
+    ".container"
+  ).innerHTML = `<p class="error">Error: ${error.message}</p>`;
+}
+
+function updateWeatherUI(data) {
+  // isbadalayaan location ka hada la tagan yahay
+  document.querySelector(
+    '[data-weather-type="icon"]'
+  ).src = `https:${data.current.condition.icon}`;
+  document.querySelector('[data-weather-type="icon"]').alt =
+    data.current.condition.text;
+  document.querySelector('[data-weather-type="description"]').textContent =
+    data.current.condition.text;
+  document
+    .querySelectorAll("#Location")
+    .forEach((el) => (el.textContent = data.location.name));
+  document.querySelector(
+    '[data-weather-type="temp"]'
+  ).textContent = `${data.current.temp_f}°F`;
+  document.querySelector(
+    '[data-weather-type="wind"]'
+  ).textContent = `${data.current.wind_kph} kph`;
+  document.querySelector(
+    '[data-weather-type="humidity"]'
+  ).textContent = `${data.current.humidity}%`;
+
+
+  // isbadalayaan alerts ka
+  updateAlerts(data.alerts ? data.alerts.alert : []);
+
+  // Update background
+  // isbadalayaan background ka 
+  updateBackground(data.current.condition.text);
+}
+
+function updateAlerts(alerts) {
+  const activeContainer = document.querySelector(".container");
+  activeContainer.innerHTML = "";
+
+  if (alerts.length > 0) {
+    const uniqueAlerts = filterUniqueAlerts(alerts);
+    uniqueAlerts.forEach((alert) => {
+      const alertElement = createAlertElement(alert);
+      if (alertElement) {
+        activeContainer.appendChild(alertElement);
       }
     });
-} 
-
-const pexelsAPIKey = "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH"
-function backgroundChange(discription) {
-  const htmlbody = document.body;
-
-  let DiscriptionSearch = "weather";
-  if(discription.textContent.includes("rain") || 
-  discription.textContent.includes("shower") ||
-  discription.textContent.includes("dirrizzle")){
-
-    DiscriptionSearch = "rainy";
-
-  } else if(discription.textContent.includes("cloud") ||
-  discription.textContent.includes("overcast") ||
-  discription.textContent.includes("partly cloudy")){
-    DiscriptionSearch = "cloudy sky";
-  }
-  else if(discription.textContent.includes("sunny") ||
-  discription.textContent.includes("clear")){
-    DiscriptionSearch = "blue sky";
-  }
-  else if(discription.textContent.includes("snow") ||
-  discription.textContent.includes("blizzard")){
-    DiscriptionSearch = "snowy sky";
-  }
-  else if(discription.textContent.includes("fog") ||
-  discription.textContent.includes("mist")){
-    DiscriptionSearch = "foggy sky";
-  }
-  else if(discription.textContent.includes("wind") ||
-  discription.textContent.includes("breeze")){
-    DiscriptionSearch = "windy sky";
-  }
-  else if(discription.textContent.includes("storm") ||
-  discription.textContent.includes("thunderstorm")) {
-    DiscriptionSearch = "stormy sky";
-  }
-  
-  fetch(`https://api.pexels.com/v1/search?query=${DiscriptionSearch}&per_page=1`, {
-   headers: {
-    Authorization: pexelsAPIKey
-  }
-})
-      .then(response => response.json())
-      .then(data => {
-        if (data.photos.length > 0) {
-          const imageUrl = data.photos[0].src.landscape;
-          htmlbody.style.background = `url('${imageUrl}') no-repeat center center/cover`;
-        } else {
-          console.warn("No images found for:", searchTerm);
-        }
-      })
-      .catch(error => {
-        console.error("Error fetching image from Pexels:", error);
-      });
-    }
-    
-
-function weatherData(data){
-  const templateContainer = document.getElementById("alert-severe")
-  const activeContainer = document.querySelector(".container")
-
-  const icon = document.querySelector('[data-weather-type="icon"]')
-  icon.src = `https:${data.current.condition.icon}`
-  icon.alt = data.current.condition.text
-
-const discription = document.querySelector('[data-weather-type="description"]')
-discription.textContent = data.current.condition.text.toLowerCase();
-
-backgroundChange(discription);
-
-
-
-  const location = document.querySelectorAll("#Location")
-  location.forEach((location) => {
-    location.textContent = data.location.name;
-
-  })
-  
-
-  const temp = document.querySelector('[data-weather-type="temp"]')
-  temp.textContent = data.current.temp_f + "°F";
-
-  const wind = document.querySelector('[data-weather-type="wind"]')
-  wind.textContent = data.current.wind_kph + " kph";
-
-
-  const humidity = document.querySelector('[data-weather-type="humidity"]')
-  humidity.textContent = data.current.humidity + "%";
-
-  
-  if (data.alerts && data.alerts.alert.length > 0) {
-    const alertData = data.alerts.alert; 
-    activeContainer.innerHTML = "";
-
-    const newAlerts = new Set();
-    const updatedAlerts = [];
-
-    alertData.forEach((item) =>{
-      const alertKey = `${item.event}-${item.areas}`
-      
-      if(!newAlerts.has(alertKey)){
-        newAlerts.add(alertKey);
-        updatedAlerts.push(item)
-      }
-
-    })
-
-    
-    updatedAlerts.forEach((item) =>{
-
-      
-
-      const activeAlertTemplate = templateContainer.content.cloneNode(true)
-      activeAlertTemplate.querySelector("h3").textContent = /*item?.event*/  item?.headline;
-      activeAlertTemplate.querySelector(".alert-location").textContent = item?.areas + " , " + data?.location?.name;
-      activeAlertTemplate.querySelector(".alert-details").textContent = item?.instruction || item?.desc;
-      activeAlertTemplate.querySelector(".alert-id").textContent = item?.severity || item?.category || item?.msgtype || item?.event;
-      activeAlertTemplate.querySelector(".alert-time-remaining").textContent = new Date(item?.effective).toLocaleTimeString();
-      
-      activeContainer.append(activeAlertTemplate)
-
-                
-    })
-  
-}else {
- 
+  } else {
     const noAlertMessage = document.createElement("p");
     noAlertMessage.textContent = "No active weather alerts.";
     activeContainer.appendChild(noAlertMessage);
-  
   }
 }
-  
 
-document.querySelector("#btn").addEventListener("click",  (e) => {
+function filterUniqueAlerts(alerts) {
+  const uniqueAlerts = new Map();
+  alerts.forEach((alert) => {
+    const key = `${alert.event}-${alert.areas}`;
+    if (!uniqueAlerts.has(key)) {
+      uniqueAlerts.set(key, alert);
+    }
+  });
+  return Array.from(uniqueAlerts.values());
+}
+
+function createAlertElement(alert) {
+  const template = document.getElementById("alert-severe");
+  if (!template) {
+    console.error("Template element with ID 'alert-severe' not found.");
+    return null;
+  }
+
+  const alertElement = template.content.cloneNode(true);
+
+  alertElement.querySelector("h3").textContent = alert.headline || alert.event;
+  alertElement.querySelector(".alert-location").textContent = `${alert.areas}`;
+  alertElement.querySelector(".alert-details").textContent =
+    alert.instruction || alert.desc;
+  alertElement.querySelector(".alert-id").textContent =
+    alert.severity || alert.category || alert.msgtype || alert.event;
+  alertElement.querySelector(".alert-time-remaining").textContent = new Date(
+    alert.effective
+  ).toLocaleTimeString();
+
+  return alertElement.firstElementChild;
+}
+
+function updateBackground(weatherDescription) {
+  const searchTerm = getBackgroundSearchTerm(weatherDescription);
+  fetchBackgroundImage(searchTerm);
+}
+
+function getBackgroundSearchTerm(description) {
+  const lowerDesc = description.toLowerCase();
+  if (
+    lowerDesc.includes("rain") ||
+    lowerDesc.includes("shower") ||
+    lowerDesc.includes("drizzle")
+  ) {
+    return "rainy weather";
+  } else if (lowerDesc.includes("cloud") || lowerDesc.includes("overcast")) {
+    return "cloudy sky";
+  } else if (lowerDesc.includes("sunny") || lowerDesc.includes("clear")) {
+    return "sunny sky";
+  } else if (lowerDesc.includes("snow") || lowerDesc.includes("blizzard")) {
+    return "snowy weather";
+  } else if (lowerDesc.includes("fog") || lowerDesc.includes("mist")) {
+    return "foggy weather";
+  } else if (lowerDesc.includes("wind") || lowerDesc.includes("breeze")) {
+    return "windy weather";
+  } else if (lowerDesc.includes("storm") || lowerDesc.includes("thunder")) {
+    return "stormy weather";
+  }
+  return "weather";
+}
+
+function fetchBackgroundImage(searchTerm) {
+  fetch(`https://api.pexels.com/v1/search?query=${searchTerm}&per_page=1`, {
+    headers: {
+      Authorization: PEXELS_API_KEY,
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      if (data.photos && data.photos.length > 0) {
+        const imageUrl = data.photos[0].src.landscape;
+        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('${imageUrl}')`;
+      } else {
+        console.warn("No images found for:", searchTerm);
+      }
+    })
+    .catch((error) => {
+      console.error("Error fetching image from Pexels:", error);
+    });
+}
+
+function searchWeather() {
   const locationInput = document.querySelector("#cityInput").value;
   if (locationInput) {
-    fetchAlerts(locationInput);
+    fetchWeatherData(locationInput)
+      .then(updateWeatherUI)
+      .catch((error) => {
+        console.error("Failed to fetch weather data:", error);
+        handleApiError(error);
+      });
   } else {
-    console.log("Please enter a location.");
+    alert("Please enter a location.");
   }
-})
-document.querySelector("#cityInput").addEventListener("keypress",  (e) => { 
-  if (e.key === "Enter") {
-    e.preventDefault();
-    const locationInput = document.querySelector("#cityInput").value;
-    if (locationInput) {
-      fetchAlerts(locationInput);
-    } else {
-      console.log("Please enter a location.");
-    }
-  }
-})
-//fetchAlerts("london");
-//fetchAlerts("New York");
-//fetchAlerts("55379");
-//fetchAlerts("san francisco");
- fetchAlerts("sydney");
+}
 
-//fetchAlerts("InvalidCity123");
+
+// dhageysiga dhacdada marka button search aan click gareeyo
+document.querySelector("#btn").addEventListener("click", searchWeather);
+
+
+// dhageysiga dhacdada marka Enter aan ku dhufano
+document
+  .querySelector("#cityInput")
+  .addEventListener("keypress", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent form submission
+      searchWeather();
+    }
+  });
+
+
+// qiimo default ah sii weather ka loogu soo bandhigayo
+fetchWeatherData("San Francisco")
+  .then(updateWeatherUI)
+  .catch((error) => {
+    console.error("Failed to fetch initial weather data:", error);
+    handleApiError(error);
+  });
