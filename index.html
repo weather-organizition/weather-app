@@ -3,94 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather Alert & Safety Information</title>
+    <title>WeatherGuard - Weather Alert & Safety Information</title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+    <div class="overlay"></div>
     <header class="header-content">
         <div class="weather">
-            <i class="fa-solid fa-shield logo"></i>
-            <h4 class="app-title">WeatherGuard</h4>
-            <i class="fa-regular fa-bell"></i>
-        </div>
-        <h1>Stay Safe. Stay Informed.</h1>
+            <div class="logo-container"><i class="fa-solid fa-shield-halved logo" aria-hidden="true"></i>
+            <h6 class="app-title">WeatherGuard</h6> </div>
+            <!-- <button class="toggle-theme" id="dark-mode-toggle"> <i id="darkModeIcon" class="fa-solid fa-sun"></i></button> -->
+             <div class="aboutUs">
+                <a href="about.html">About us</a>
+                <button id="darkModeToggle" class="dark-mode-toggle">
+                    <i id="darkModeIcon" class="fas fa-sun"></i> <!-- Initial icon for light mode -->
+                </button> 
+             </div>
+                  </div>
+        <h2>Stay Safe. Stay Informed.</h2>
         <p>Real-time extreme weather alerts for your location.</p>
         <form class="search" role="search">
-            <input type="search" placeholder="Enter location..." aria-label="Search weather alerts">
-            <button type="submit">Search</button>
+            <label for="cityInput" class="search-label">
+                <div class="input-container">
+                    <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+                    <input id="cityInput" type="text" placeholder="Enter location..." aria-label="Search weather alerts">
+                    <button id="btn" type="button">
+                        <i class="fa-solid fa-location-pin"></i>
+
+                       Detect
+                    </button>
+                </div>
+            </label>
         </form>
+        
     </header>
 
-    <main>
-        <section id="current-conditions">
-            <i class="fa-solid fa-temperature-three-quarters"></i>
-            <h2>Current Conditions</h2>
+    <main >
+        <section id="current-conditions" class="current-condition" >
+      <div class="current-conditions">
+            <div class="current">
+            <h2><i class="fa-solid fa-temperature-three-quarters" aria-hidden="true"></i> Current Conditions</h2>
+            <div class="current-weather">
+                <img class="weather-icon" data-weather-type="icon" src="/placeholder.svg" alt="Weather icon">
+                <h3 class="weather-description" data-weather-type="description">Loading...</h3>
+            </div>
+            <h3 class="location" id="Location"></h3>
+            </div>
+       
+
             <div class="weather-details">
-                <div class="temperature">
-                    <p class="value">72°F</p>
+                <div class="weather-item temperature"> 
+                    <p class="value" data-weather-type="temp">--°F</p>
                     <p class="label">Temperature</p>
                 </div>
-                <div class="humidity">
-                    <p class="value">45%</p>
+                <div class="weather-item humidity">
+                    <p class="value" data-weather-type="humidity">--%</p>
                     <p class="label">Humidity</p>
                 </div>
-                <div class="wind">
-                    <p class="value">12mph</p>
+                <div class="weather-item wind">
+                    <p class="value" data-weather-type="wind">-- kph</p>
                     <p class="label">Wind Speed</p>
                 </div>
             </div>
+        </div>
         </section>
 
         <section class="active-alerts">
             <div class="container">
                 <div class="header">
-                    <i class="fa-regular fa-bell"></i>
-                    <h2>Active Alerts</h2>
-                    <span>Live Updates</span>
+                    <h1><i class="fas fa-bell"></i> active alerts</h1>
+                    <!-- <h2>Active Alerts</h2> -->
+                    <span class="live-updates">Live Updates</span>
                 </div>
-        
-                <div class="alert alert-severe">
-                    <div class="alert-title">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        Severe Thunderstorm Warning
-                    </div>
-                    <div class="alert-location">Denver, CO</div>
-                    <div class="alert-details">Large hail and damaging winds expected. 
-                        Seek shelter immediately. Lightning may cause power outages.</div>
-                    <div class="alert-footer">
-                        <span class="alert-id">THUNDERSTORM ID:1</span>
-                        <span class="alert-time-remaining">1h remaining</span>
-                    </div>
+                <div class="alert-container">
+
                 </div>
-        
-                <div class="alert alert-watch">
-                    <div class="alert-title">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        Flash Flood Watch
+                <template id="alert-severe" class="alert-template">
+                    <div class="alert alert-severe">
+                        <div class="alert-title">
+                            <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                            <h3 data-weather-type="alertEvent">Alert Title</h3> 
+                        </div>
+                        <div class="alert-location" id="Location">Location</div>
+                        <div class="alert-details" data-weather-type="alertInstruction">Alert details</div>
+                        <div class="alert-footer">
+                            <span class="alert-id" data-weather-type="alertSeverity">Alert ID</span>
+                            <span class="alert-time-remaining" data-weather-type="alertEffective">Time remaining</span>
+                        </div>
                     </div>
-                    <div class="alert-location">Boulder County, CO</div>
-                    <div class="alert-details">Heavy rainfall may lead to flash flooding. Monitor local conditions and be prepared to take action.</div>
-                    <div class="alert-footer">
-                        <span class="alert-id">FLOOD ID:2</span>
-                        <span class="alert-time-remaining">3h remaining</span>
-                    </div>
-                </div>
-        
-                <div class="alert alert-advisory">
-                    <div class="alert-title">
-                        <i class="fa-solid fa-triangle-exclamation"></i>
-                        High Wind Advisory
-                    </div>
-                    <div class="alert-location">Fort Collins, CO</div>
-                    <div class="alert-details">Winds 25-35 mph with gusts up to 50 mph expected. Secure loose outdoor objects.</div>
-                    <div class="alert-footer">
-                        <span class="alert-id">WIND ID:3</span>
-                        <span class="alert-time-remaining">5h remaining</span>
-                    </div>
-                </div>
+                </template>
             </div>
         </section>
+        <template id="safety">
+            <div class="safety-tips alert  active-alerts">
+            <div id="safety-header"> <h2><i class="fas fa-shield-alt"></i>  Safety Tips</h2></div>
+                    <!-- <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> -->
+                  
+                   <ul class="tips-list"></ul>
+                </div>
+        </template>
     </main>
+    <template id="alert-severe">
+        <div class="alert alert-severe">
+            <div class="alert-title">
+                <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i>
+                <h3 data-weather-type="alertEvent">Alert Title</h3> 
+            </div>
+            <div class="alert-location" id="Location">Location</div>
+            <div class="alert-details" data-weather-type="alertInstruction">Alert details</div>
+            <div class="alert-footer">
+                <span class="alert-id" data-weather-type="alertSeverity">Alert ID</span>
+                <span class="alert-time-remaining" data-weather-type="alertEffective">Time remaining</span>
+            </div>
+        </div>
+    </template>
+
+    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="/JS/scrip.js"></script>
 </body>
 </html>
+
