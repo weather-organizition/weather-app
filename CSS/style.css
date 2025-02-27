@@ -43,7 +43,15 @@ body {
     padding-top: 30px;
 }
 
-.ab
+/* halkaan link about  */
+
+.aboutUs a{
+    color: white;
+    text-decoration: none;
+    padding-right: 1.5rem;
+    padding-top: 3rem;
+    
+}
 
 .logo-container {
     display: inline-flex;       

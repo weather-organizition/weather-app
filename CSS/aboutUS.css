@@ -12,6 +12,18 @@ header {
     padding: 20px 0;
 }
 
+/* halkaan link about  */
+
+header a{
+    text-decoration: none;
+    
+}
+
+header a{
+    color: #ddd;
+    text-decoration: none;
+}
+
 section {
     padding: 20px;
     margin: 20px;
