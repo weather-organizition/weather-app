@@ -12,7 +12,7 @@ function fetchWeatherData(location) {
       return response.json();
     })
     .then((data) => {
-      if (data) {
+      if (data) { n
         return data;
       } else {
         throw new Error("No data received from the API");

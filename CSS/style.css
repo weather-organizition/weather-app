@@ -364,9 +364,11 @@ h1 i {
 }
 body.dark-mode .alert{
     background-color: #1e2733;
+    color: #fff;
 }
 body.dark-mode .active-alerts{
     background-color: #1e2733;
+   
 }
 body.dark-mode .current-conditions{
     background-color:#1e2733;
