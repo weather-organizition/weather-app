@@ -129,10 +129,10 @@ body {
     padding: 5px;
     margin-left:35%;
 }
-.search-icon{
+ .search-icon{
     margin-right:10px;
     color:#fff
-}
+} 
 
 #cityInput {
     flex-grow: 1;
