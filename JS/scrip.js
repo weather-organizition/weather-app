@@ -176,7 +176,7 @@ function createAlertElement(alert) {
   alertElement.querySelector("h3").textContent = alert.headline || alert.event;
   alertElement.querySelector(".alert-location").textContent = `${alert.areas}`;
   const description = alert.desc    
-    ? alert.desc.split("...\n")[0]
+    ? alert.desc.split("...\n")
     : "No description available";
   alertElement.querySelector(".alert-details").textContent = description;
   const severity = alert.severity;
