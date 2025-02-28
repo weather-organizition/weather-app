@@ -196,6 +196,48 @@ body::before {
 
 /* NB: waxaad isticmaali doontaan responsive ka gaar ahaan mobile responsive ka 
  */
+
+
+ @media (max-width: 600px) {
+    .weather-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .search {
+        flex-direction: column;
+    }
+    
+    .search button {
+        width: 100%;
+    }
+} 
+ 
+ 
+ @media (min-width: 600px) {
+    .weather-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .search {
+        flex-direction: column;
+    }
+    
+    .search button {
+        width: 100%;
+    }
+} 
+ 
+ 
  @media (max-width: 768px) {
     .weather-details {
         flex-direction: column;
