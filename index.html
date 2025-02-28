@@ -45,7 +45,7 @@
             <div class="current">
             <h2><i class="fa-solid fa-temperature-three-quarters" aria-hidden="true"></i> Current Conditions</h2>
             <div class="current-weather">
-                <img class="weather-icon" data-weather-type="icon" src="/placeholder.svg" alt="Weather icon">
+                <img class="weather-icon" data-weather-type="icon" src="" alt="Weather icon">
                 <h3 class="weather-description" data-weather-type="description">Loading...</h3>
             </div>
             <h3 class="location" id="Location"></h3>
@@ -57,10 +57,15 @@
                     <p class="value" data-weather-type="temp">--°F</p>
                     <p class="label">Temperature</p>
                 </div>
+                <div class="weather-item feels-like">
+                    <p class="value" data-weather-type="feelsLike">--°F</p>
+                    <p class="label">Feels Like</p>
+                </div>
                 <div class="weather-item humidity">
                     <p class="value" data-weather-type="humidity">--%</p>
                     <p class="label">Humidity</p>
                 </div>
+
                 <div class="weather-item wind">
                     <p class="value" data-weather-type="wind">-- kph</p>
                     <p class="label">Wind Speed</p>
@@ -121,7 +126,7 @@
 
     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/JS/scrip.js"></script>
+    <script src="./JS/scrip.js"></script>
 </body>
 </html>
 
