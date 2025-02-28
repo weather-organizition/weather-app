@@ -1,3 +1,74 @@
+
+const safetyData = {
+  "Tornado Warning": [
+    "Take shelter in a basement or an interior room without windows.",
+    "Avoid mobile homes or vehicles; find a sturdy building.",
+    "Cover yourself with a mattress or heavy blankets for protection.",
+    "Listen to local weather updates and alerts.",
+  ],
+  "Severe Thunderstorm Warning": [
+    "Stay indoors and avoid windows.",
+    "Unplug electrical appliances to prevent power surges.",
+    "Avoid using water and landline phones during the storm.",
+    "Stay away from tall objects and isolated trees if outdoors.",
+  ],
+  "Flash Flood Warning": [
+    "Move to higher ground immediately.",
+    "Avoid walking or driving through floodwaters.",
+    "Turn around, don't drown—just 6 inches of water can knock you down.",
+    "Listen to emergency broadcasts for updates.",
+  ],
+  "Hurricane Warning": [
+    "Evacuate if instructed by local authorities.",
+    "Stock up on food, water, and emergency supplies.",
+    "Secure outdoor objects and reinforce windows and doors.",
+    "Stay indoors and avoid coastal areas.",
+  ],
+  "Winter Storm Warning": [
+    "Stay indoors and keep warm with extra layers or blankets.",
+    "Avoid traveling unless absolutely necessary.",
+    "Keep a flashlight, food, and water in case of power outages.",
+    "Be cautious of icy roads and sidewalks.",
+  ],
+  "Excessive Heat Warning": [
+    "Stay hydrated and drink plenty of water.",
+    "Avoid outdoor activities during peak heat hours (10 AM - 4 PM).",
+    "Wear loose, light-colored clothing.",
+    "Never leave children or pets in a parked car.",
+  ],
+  "High Wind Warning": [
+    "Secure loose outdoor objects like patio furniture.",
+    "Stay indoors and away from windows.",
+    "Be cautious of falling tree branches and power lines.",
+    "Avoid driving high-profile vehicles like trucks or RVs.",
+  ],
+  "Air Quality Alert": [
+    "Limit outdoor activities, especially for children and elderly.",
+    "Wear a mask if necessary, especially in areas with heavy smoke or pollution.",
+    "Use air purifiers indoors to reduce exposure to pollutants.",
+    "Keep windows and doors closed to maintain indoor air quality.",
+  ],
+  "Tsunami Warning": [
+    "Move to higher ground immediately.",
+    "Stay away from the shore until authorities declare it safe.",
+    "Follow evacuation routes and emergency instructions.",
+    "Do not attempt to watch the tsunami waves from the beach.",
+  ],
+  "Wildfire Warning": [
+    "Prepare an emergency evacuation kit with essentials.",
+    "Close all windows and doors to prevent smoke from entering.",
+    "If told to evacuate, leave immediately.",
+    "Avoid outdoor activities in smoky areas.",
+  ],
+};
+
+
+
+
+
+
+
+
 const API_KEY = "b96487ed0b804c0e8ce52629251602";
 const PEXELS_API_KEY = "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH";
 
@@ -104,16 +175,65 @@ function createAlertElement(alert) {
 
   alertElement.querySelector("h3").textContent = alert.headline || alert.event;
   alertElement.querySelector(".alert-location").textContent = `${alert.areas}`;
-  alertElement.querySelector(".alert-details").textContent =
-    alert.instruction || alert.desc;
-  alertElement.querySelector(".alert-id").textContent =
-    alert.severity || alert.category || alert.msgtype || alert.event;
-  alertElement.querySelector(".alert-time-remaining").textContent = new Date(
-    alert.effective
-  ).toLocaleTimeString();
+  const description = alert.desc    
+    ? alert.desc.split("...\n")[0]
+    : "No description available";
+  alertElement.querySelector(".alert-details").textContent = description;
+  const severity = alert.severity;
+  alertElement.querySelector(".alert-id").textContent = severity;
+  const alertIdElement = alertElement.querySelector(".alert-id");
+  //adding class based on the severity of the alert 
+  severity === "Severe"
+    ? alertIdElement.classList.add("alert-severe")
+    : alertIdElement.classList.add("alert-watch");
+
+
+    const safetyTemplate = document.getElementById("safety");
+    const safetyTipElement = safetyTemplate.content.cloneNode(true);
+    const tipsListElement = safetyTipElement.querySelector(".tips-list");
+    const safetyTips = getSafetyTipsForAlert(alert);
+  
+    console.log(safetyTips);
+    safetyTips.forEach((tip) => {
+      const listItem = document.createElement("li");
+      listItem.innerHTML = `<strong>${tip}</strong>}`;
+      console.log(listItem);
+      tipsListElement.appendChild(listItem);
+    });
+    document.body.appendChild(safetyTipElement);
+
 
   return alertElement.firstElementChild;
 }
+
+//Creating safety tips function
+function getSafetyTipsForAlert(alert) {
+  // Check if the alert contains an instruction (e.g., safety tips)
+  let safetyTips;
+  if (alert) {
+    safetyTips = alert.instruction
+      ? alert.instruction.split("...\n")
+      : safetyData[alert.event];
+  } else {
+    safetyTips = ["no safety data available"];
+  }
+  return safetyTips;
+  // const instruction=alert.instruction
+  // console.log(instruction)
+  // if (instruction) {
+  //   return [
+  //     `Safety Tip: ${instruction}`
+  //   ];
+  // }
+
+  // // Default safety tip if no instruction is available
+  // return [
+  //   "stay safe stay warm: satya aaaa"
+  // ];
+}
+
+
+
 
 function updateBackground(weatherDescription) {
   const searchTerm = getBackgroundSearchTerm(weatherDescription);
