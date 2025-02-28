@@ -201,3 +201,32 @@ fetchWeatherData("london")
     console.error("Failed to fetch initial weather data:", error);
     handleApiError(error);
   });
+
+
+ 
+//Dark mode functionality section
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  const darkModeIcon = document.getElementById('darkModeIcon');
+
+  // hubi in ay active thy 
+  if (document.body.classList.contains('dark-mode')) {
+      darkModeIcon.classList.remove('fa-sun');
+      darkModeIcon.classList.add('fa-moon'); 
+  } else {
+      darkModeIcon.classList.remove('fa-moon');
+      darkModeIcon.classList.add('fa-sun'); 
+  }
+
+  // Toggle dark mode marka button la taabto
+  darkModeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+
+      // Updating the icon iyado lo egayo current state
+      if (document.body.classList.contains('dark-mode')) {
+          darkModeIcon.classList.remove('fa-sun');
+          darkModeIcon.classList.add('fa-moon');
+      } else {
+          darkModeIcon.classList.remove('fa-moon');
+          darkModeIcon.classList.add('fa-sun'); 
+      }
+  });
