@@ -368,6 +368,10 @@ body.dark-mode .alert{
 body.dark-mode .active-alerts{
     background-color: #1e2733;
 }
+body.dark-mode .no-alerts{
+    background-color: #1e2733;
+    color: white;
+}
 body.dark-mode .current-conditions{
     background-color:#1e2733;
     border: none;
