@@ -138,8 +138,8 @@ body {
     flex-grow: 1;
     padding: 10px 20px;
     border: none;
-    /* background: transparent; */
-    color: inherit;
+    background: transparent;
+    color: white;
     font-size: 16px;
     outline: none;
     border-radius: 20px;
@@ -358,20 +358,21 @@ h1 i {
   
 
   /*DARK MODE SECTION STYLING*/
-  body.dark-mode {
+   body.dark-mode {
     background-color: #1a1a1a;
     color: white;
-}
-body.dark-mode .alert{
+} */
+ body.dark-mode .alert{
     background-color: #1e2733;
-}
-body.dark-mode .active-alerts{
+    color: white;
+} 
+ /* body.dark-mode .active-alerts{
     background-color: #1e2733;
-}
+}  */
 body.dark-mode .current-conditions{
     background-color:#1e2733;
     border: none;
-    color: #fff;
+    /* color: #fff; */
 }
  .dark-mode-toggle{
 background: none; 
@@ -379,18 +380,18 @@ background: none;
  padding: 0; 
  font-size: 24px; 
  cursor: pointer;
- color: inherit; 
+ /* color: inherit;  */
  transition: transform 0.2s ease-in-out;
  color: #fff;
  }
 
 body.dark-mode .safety-tips {
     background-color:#202a37; 
-    color:#fff;
+    /* color:#fff; */
 }
 
 
-@media (max-width: 768px) {
+ @media (max-width: 768px) {
     .header-content h2 {
         font-size: 2rem;
     }
@@ -421,4 +422,4 @@ body.dark-mode .safety-tips {
     .weather-details .label {
         font-size: 1rem;
     }
-}
+} 
