@@ -422,3 +422,45 @@ body.dark-mode .safety-tips {
         font-size: 1rem;
     }
 }
+
+
+@media (max-width: 500px) {
+
+    .header-content h2 {
+        font-size: 0.5rem;
+    }
+
+    .search {
+        flex-direction: column;
+    }
+
+    .search button {
+        width: 100%;
+    }
+
+    .weather-details {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    #current-conditions,
+    .active-alerts {
+        margin: 10px 5px;
+        padding: 15px;
+    }
+
+    .weather-details .value {
+        font-size: 1.5rem;
+    }
+
+    .weather-details .label {
+        font-size: 0.5rem;
+    }
+
+
+
+
+
+
+
+}
