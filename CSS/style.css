@@ -256,3 +256,38 @@ body::before {
         width: 100%;
     }
 } 
+
+
+@media (min-width: 992px) {
+    .weather-details {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .header-content h1 {
+        font-size: 2rem;
+    }
+    
+    .search {
+        flex-direction: column;
+    }
+    
+    .search button {
+        width: 100%;
+    }
+} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
