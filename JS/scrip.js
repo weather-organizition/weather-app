@@ -64,46 +64,49 @@ const safetyData = {
 
 
 
-
-
-
-
-
 const API_KEY = "b96487ed0b804c0e8ce52629251602";
 const PEXELS_API_KEY =
   "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH";
 
 // fetch weather data from WeatherAPI
-function fetchWeatherData(location) {
+
+async function fetchWeatherData(location) {
   const url = `https://api.weatherapi.com/v1/forecast.json?key=${API_KEY}&q=${location}&alerts=yes`;
 
-  return fetch(url)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data) {
-        return data;
-      } else {
-        throw new Error("No data received from the API");
-      }
-    })
-    .catch(handleApiError);
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const data = await response.json();
+    return data;
+  }
+  catch (error) {
+    handleApiError(error);
+  }
 }
-// handle API errors
+
 
 function handleApiError(error) {
   console.error("Error fetching weather data:", error);
   // soo bandhigista error ka message ee user
+  let errorMessage = "An unexpected error occurred. Please try again.";
+
+  if (error.message.includes("Network response was not ok")) {
+    errorMessage = "Weather service is unavailable. Please try later.";
+  } else if (error.message.includes("Failed to fetch")) {
+    errorMessage = "Network error! Please check your internet connection.";
+  } else if (error.message.includes("No data received from the API")) {
+    errorMessage = "Location not found. Please enter a valid city.";
+  }
+
+
   document.querySelector(
     "#current-conditions"
-  ).innerHTML = `<p class="error">Error: ${error.message}</p>`;
+  ).innerHTML = `<p class="error">Error: ${errorMessage}</p>`;
   document.querySelector(
     ".container"
-  ).innerHTML = `<p class="error">Error: ${error.message}</p>`;
+  ).innerHTML = `<p class="error">Error: ${errorMessage}</p>`;
 }
  // update weather data on the UI
 
@@ -222,8 +225,10 @@ function updateAlerts(alerts) {
     });
   } else {
     const noAlertMessage = document.createElement("p");
+    noAlertMessage.classList.add("no-alerts");
     noAlertMessage.textContent = "No active weather alerts.";
     activeContainer.appendChild(noAlertMessage);
+
   }
 }
 // get unique alerts based on event and areas
@@ -237,7 +242,7 @@ function filterUniqueAlerts(alerts) {
   });
   return Array.from(uniqueAlerts.values());
 }
-// create alert element based on the template
+// create alert element based on the alert data
 function createAlertElement(alert) {
   const template = document.getElementById("alert-severe");
   if (!template) {
@@ -349,7 +354,7 @@ function fetchBackgroundImage(searchTerm) {
     .then((data) => {
       if (data.photos && data.photos.length > 0) {
         const imageUrl = data.photos[0].src.landscape;
-        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('${imageUrl}')`;
+        document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('${imageUrl}')`;
       } else {
         console.warn("No images found for:", searchTerm);
       }
@@ -370,6 +375,7 @@ function searchWeather() {
       });
   } else {
     alert("Please enter a location.");
+    return;
   }
 }
 
