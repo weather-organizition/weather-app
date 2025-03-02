@@ -242,6 +242,9 @@ function filterUniqueAlerts(alerts) {
   return Array.from(uniqueAlerts.values());
 }
 // create alert element based on the alert data
+// Store added safety alerts to prevent duplicates
+const addedSafetyAlerts = new Set();
+
 function createAlertElement(alert) {
   const template = document.getElementById("alert-severe");
   if (!template) {
@@ -250,57 +253,53 @@ function createAlertElement(alert) {
   }
 
   const alertElement = template.content.cloneNode(true);
-
   alertElement.querySelector("h3").textContent = alert.headline || alert.event;
   alertElement.querySelector(".alert-location").textContent = `${alert.areas}`;
-  const description = alert.desc    
-    ? alert.desc.split("...\n")[0]
-    : "No description available";
+  const description = alert.desc ? alert.desc.split("...\n") : "No description available";
   alertElement.querySelector(".alert-details").textContent = description;
 
-  // Calculate time remaining for the alert to expire
-  
+  // Time remaining
   const alertEffectiveTime = new Date(alert.effective);
   const currentTime = new Date();
-  const timeRemaining = currentTime - alertEffectiveTime ; // Get difference in milliseconds
-
+  const timeRemaining = currentTime - alertEffectiveTime;
   const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
   const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
 
   const timeRemainingText = hoursRemaining > 0 
-  ? `${hoursRemaining} hour${hoursRemaining > 1 ? 's' : ''} remaining` 
-  : `${minutesRemaining} minute${minutesRemaining > 1 ? 's' : ''} remaining`;
+    ? `${hoursRemaining} hour${hoursRemaining > 1 ? 's' : ''} remaining` 
+    : `${minutesRemaining} minute${minutesRemaining > 1 ? 's' : ''} remaining`;
 
   alertElement.querySelector(".alert-time-remaining").textContent = timeRemainingText;
 
-
+  // Add severity class
   const severity = alert.severity;
   alertElement.querySelector(".alert-id").textContent = severity;
   const alertIdElement = alertElement.querySelector(".alert-id");
-  //adding class based on the severity of the alert 
-  severity === "Severe"
-    ? alertIdElement.classList.add("alert-severe")
-    : alertIdElement.classList.add("alert-watch");
+  severity === "Severe" ? alertIdElement.classList.add("alert-severe") : alertIdElement.classList.add("alert-watch");
 
+  // Prevent duplicate safety tips
+  if (!addedSafetyAlerts.has(alert.event)) {
     const safetyTemplate = document.getElementById("safety");
-    const safetyTipElement = safetyTemplate.content.cloneNode(true);
-    const tipsListElement = safetyTipElement.querySelector(".tips-list");
-    const safetyTips = getSafetyTipsForAlert(alert);
-  
-    console.log(safetyTips);
-    safetyTips.forEach((tip) => {
-      const listItem = document.createElement("li");
-      listItem.innerHTML = `<strong>${tip}</strong>`;
-      console.log(listItem);
-      tipsListElement.appendChild(listItem);
-    });
-    document.body.appendChild(safetyTipElement);
+    if (safetyTemplate) {
+      const safetyTipElement = safetyTemplate.content.cloneNode(true);
+      const tipsListElement = safetyTipElement.querySelector(".tips-list");
+      const safetyTips = getSafetyTipsForAlert(alert);
 
+      safetyTips.forEach((tip) => {
+        const listItem = document.createElement("li");
+        listItem.classList.add('safety-tips-list')
+        listItem.innerHTML = `<strong>${tip}</strong>`;
+        tipsListElement.appendChild(listItem);
+      });
+
+      document.body.appendChild(safetyTipElement);
+      addedSafetyAlerts.add(alert.event); // Mark this alert type as added
+    }
+  }
 
   return alertElement.firstElementChild;
-
-  
 }
+
 
 //Creating safety tips function
 function getSafetyTipsForAlert(alert) {
