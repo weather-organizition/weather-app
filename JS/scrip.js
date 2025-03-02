@@ -412,7 +412,7 @@ document
   });
 
 // qiimo default ah sii weather ka loogu soo bandhigayo
-fetchWeatherData("Mogadishu")
+fetchWeatherData("California")
   .then(updateWeatherUI)
   .catch((error) => {
     console.error("Failed to fetch initial weather data:", error);
