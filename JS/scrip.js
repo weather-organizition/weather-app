@@ -285,7 +285,7 @@ function createAlertElement(alert) {
       const tipsListElement = safetyTipElement.querySelector(".tips-list");
       const safetyTips = getSafetyTipsForAlert(alert);
 
-      safetyTips.forEach((tip) => {
+      safetyTips.forEach((tip) => {git 
         const listItem = document.createElement("li");
         listItem.classList.add('safety-tips-list')
         listItem.innerHTML = `<strong>${tip}</strong>`;
