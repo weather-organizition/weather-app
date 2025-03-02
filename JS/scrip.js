@@ -63,7 +63,6 @@ const safetyData = {
 };
 
 
-
 const API_KEY = "b96487ed0b804c0e8ce52629251602";
 const PEXELS_API_KEY =
   "Qym5GvbpnwpZ17rsVnIinRACfjJo6t0x8S5v1ktVWQCH4yVkcRl9ZchH";
@@ -258,6 +257,23 @@ function createAlertElement(alert) {
     ? alert.desc.split("...\n")[0]
     : "No description available";
   alertElement.querySelector(".alert-details").textContent = description;
+
+  // Calculate time remaining for the alert to expire
+  
+  const alertEffectiveTime = new Date(alert.effective);
+  const currentTime = new Date();
+  const timeRemaining = currentTime - alertEffectiveTime ; // Get difference in milliseconds
+
+  const hoursRemaining = Math.floor(timeRemaining / (1000 * 60 * 60));
+  const minutesRemaining = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+
+  const timeRemainingText = hoursRemaining > 0 
+  ? `${hoursRemaining} hour${hoursRemaining > 1 ? 's' : ''} remaining` 
+  : `${minutesRemaining} minute${minutesRemaining > 1 ? 's' : ''} remaining`;
+
+  alertElement.querySelector(".alert-time-remaining").textContent = timeRemainingText;
+
+
   const severity = alert.severity;
   alertElement.querySelector(".alert-id").textContent = severity;
   const alertIdElement = alertElement.querySelector(".alert-id");
@@ -265,7 +281,6 @@ function createAlertElement(alert) {
   severity === "Severe"
     ? alertIdElement.classList.add("alert-severe")
     : alertIdElement.classList.add("alert-watch");
-
 
     const safetyTemplate = document.getElementById("safety");
     const safetyTipElement = safetyTemplate.content.cloneNode(true);
@@ -275,7 +290,7 @@ function createAlertElement(alert) {
     console.log(safetyTips);
     safetyTips.forEach((tip) => {
       const listItem = document.createElement("li");
-      listItem.innerHTML = `<strong>${tip}</strong>}`;
+      listItem.innerHTML = `<strong>${tip}</strong>`;
       console.log(listItem);
       tipsListElement.appendChild(listItem);
     });
@@ -283,6 +298,8 @@ function createAlertElement(alert) {
 
 
   return alertElement.firstElementChild;
+
+  
 }
 
 //Creating safety tips function
@@ -355,6 +372,7 @@ function fetchBackgroundImage(searchTerm) {
       if (data.photos && data.photos.length > 0) {
         const imageUrl = data.photos[0].src.landscape;
         document.body.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.7)), url('${imageUrl}')`;
+        
       } else {
         console.warn("No images found for:", searchTerm);
       }
@@ -402,17 +420,22 @@ fetchWeatherData("Mogadishu")
   });
 
 //Dark mode functionality section
+document.addEventListener("DOMContentLoaded", () => {
+
 const darkModeToggle = document.getElementById("darkModeToggle");
 const darkModeIcon = document.getElementById("darkModeIcon");
-
-// hubi in ay active thy
-if (document.body.classList.contains("dark-mode")) {
+if (localStorage.getItem("darkMode") === "enabled") {
+  document.body.classList.add("dark-mode");
   darkModeIcon.classList.remove("fa-sun");
   darkModeIcon.classList.add("fa-moon");
 } else {
+  document.body.classList.remove("dark-mode");
   darkModeIcon.classList.remove("fa-moon");
   darkModeIcon.classList.add("fa-sun");
 }
+
+// hubi in ay active thy
+
 
 // Toggle dark mode marka button la taabto
 darkModeToggle.addEventListener("click", () => {
@@ -420,10 +443,13 @@ darkModeToggle.addEventListener("click", () => {
 
   // Updating the icon iyado lo egayo current state
   if (document.body.classList.contains("dark-mode")) {
+    localStorage.setItem("darkMode", "enabled");
     darkModeIcon.classList.remove("fa-sun");
     darkModeIcon.classList.add("fa-moon");
   } else {
+    localStorage.setItem("darkMode", "disabled");
     darkModeIcon.classList.remove("fa-moon");
     darkModeIcon.classList.add("fa-sun");
   }
+});
 });
