@@ -3,7 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WeatherGuard - Weather Alert & Safety Information</title>
+    <title>WeatherGuard</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="./public/favicon_io/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./public/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./public/favicon_io/favicon-16x16.png">
+    <link rel="manifest" href="./public/favicon_io/site.webmanifest">
+
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -45,7 +50,7 @@
             <div class="current">
             <h2><i class="fa-solid fa-temperature-three-quarters" aria-hidden="true"></i> Current Conditions</h2>
             <div class="current-weather">
-                <img class="weather-icon" data-weather-type="icon" src="/placeholder.svg" alt="Weather icon">
+                <img class="weather-icon" data-weather-type="icon" src="" alt="Weather icon">
                 <h3 class="weather-description" data-weather-type="description">Loading...</h3>
             </div>
             <h3 class="location" id="Location"></h3>
@@ -57,10 +62,15 @@
                     <p class="value" data-weather-type="temp">--°F</p>
                     <p class="label">Temperature</p>
                 </div>
+                <div class="weather-item feels-like">
+                    <p class="value" data-weather-type="feelsLike">--°F</p>
+                    <p class="label">Feels Like</p>
+                </div>
                 <div class="weather-item humidity">
                     <p class="value" data-weather-type="humidity">--%</p>
                     <p class="label">Humidity</p>
                 </div>
+
                 <div class="weather-item wind">
                     <p class="value" data-weather-type="wind">-- kph</p>
                     <p class="label">Wind Speed</p>
@@ -97,7 +107,7 @@
         </section>
         <template id="safety">
             <div class="safety-tips alert  active-alerts">
-            <div id="safety-header"> <h2><i class="fas fa-shield-alt"></i>  Safety Tips</h2></div>
+            <div id="safety-header"> </div>
                     <!-- <i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> -->
                   
                    <ul class="tips-list"></ul>
@@ -118,10 +128,9 @@
             </div>
         </div>
     </template>
-
-    
+     
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="/JS/scrip.js"></script>
+    <script src="./JS/scrip.js"></script>
 </body>
 </html>
 
